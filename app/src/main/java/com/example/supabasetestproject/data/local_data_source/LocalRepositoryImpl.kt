@@ -4,8 +4,9 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import com.example.supabasetestproject.domain.repository.LocalRepository
 
-class LocalRepositoryImpl(context: Context) {
+open class LocalRepositoryImpl(context: Context) : LocalRepository {
     private val masterKey = MasterKey.Builder(context)
         .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
         .build()
@@ -18,11 +19,11 @@ class LocalRepositoryImpl(context: Context) {
         EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM,
     )
 
-    fun setIsAlreadySeenOnBoarding() {
+    override fun setIsAlreadySeenOnBoarding() {
         sharedPreferences.edit().putBoolean("isAlreadySeenOnBoarding", true).apply()
     }
 
-    fun isAlreadySeenOnBoarding(): Boolean {
+    override fun isAlreadySeenOnBoarding(): Boolean {
         return sharedPreferences.getBoolean("isAlreadySeenOnBoarding", false)
     }
 }

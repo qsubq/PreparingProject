@@ -35,6 +35,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.supabasetestproject.R
+import com.example.supabasetestproject.data.local_data_source.LocalRepositoryImpl
+import com.example.supabasetestproject.domain.repository.LocalRepository
 import java.util.LinkedList
 import java.util.Queue
 
@@ -71,14 +73,22 @@ class OnBoardingFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                OnBoardingScreen(navController = findNavController(), onBoardingQueue)
+                OnBoardingScreen(
+                    navController = findNavController(),
+                    onBoardingQueue,
+                    LocalRepositoryImpl(requireContext()),
+                )
             }
         }
     }
 }
 
 @Composable
-fun OnBoardingScreen(navController: NavController, onBoardingQueue: Queue<OnBoardingModel>) {
+fun OnBoardingScreen(
+    navController: NavController,
+    onBoardingQueue: Queue<OnBoardingModel>,
+    repositoryImpl: LocalRepository,
+) {
     val currentItem = remember { mutableStateOf(onBoardingQueue.poll()) }
 
     Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
@@ -112,6 +122,7 @@ fun OnBoardingScreen(navController: NavController, onBoardingQueue: Queue<OnBoar
                     onClick = {
                         if (onBoardingQueue.isEmpty()) {
                             navController.navigate(R.id.action_onBoardingFragment_to_signUpFragment)
+                            repositoryImpl.setIsAlreadySeenOnBoarding()
                         }
                     },
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF0560FA)),
@@ -148,6 +159,7 @@ fun OnBoardingScreen(navController: NavController, onBoardingQueue: Queue<OnBoar
                         .testTag("SkipBtn"),
                     onClick = {
                         navController.navigate(R.id.action_onBoardingFragment_to_signUpFragment)
+                        repositoryImpl.setIsAlreadySeenOnBoarding()
                     },
                     border = BorderStroke(1.dp, color = Color(0xFF0560FA)),
                 ) {

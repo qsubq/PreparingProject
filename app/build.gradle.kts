@@ -96,6 +96,7 @@ dependencies {
     // Test
     androidTestImplementation("org.mockito:mockito-core:2.19.0")
     androidTestImplementation("androidx.navigation:navigation-testing:2.6.0")
+    androidTestImplementation("org.mockito:mockito-android:2.24.5")
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
