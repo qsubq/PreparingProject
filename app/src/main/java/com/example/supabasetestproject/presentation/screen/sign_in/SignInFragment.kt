@@ -1,6 +1,7 @@
 package com.example.supabasetestproject.presentation.screen.sign_in
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.supabasetestproject.data.remote_data_source.RemoteRepositoryImpl
 import com.example.supabasetestproject.databinding.FragmentSignInBinding
 import kotlinx.coroutines.launch
+import java.security.MessageDigest
 
 class SignInFragment : Fragment() {
     private lateinit var binding: FragmentSignInBinding
@@ -30,13 +32,23 @@ class SignInFragment : Fragment() {
 
         binding.btnSignIn.setOnClickListener {
             val repositoryImpl = RemoteRepositoryImpl()
-
             lifecycleScope.launch {
                 repositoryImpl.signIn(
                     binding.TIETEmail.text.toString(),
                     binding.TIETPassword.text.toString(),
                 )
             }
+
+            val message = binding.TIETPassword.text.toString()
+            val digest = MessageDigest.getInstance("SHA-256")
+            val hash = digest.digest(message.toByteArray())
+            Log.e("SignIn", hash.toString())
+            val stringHash = with(StringBuilder()) {
+                hash.forEach { b ->
+                    append(String.format("%02X", b))
+                }
+            }
+            Log.e("SignIn", stringHash.toString().toLowerCase())
         }
     }
 }

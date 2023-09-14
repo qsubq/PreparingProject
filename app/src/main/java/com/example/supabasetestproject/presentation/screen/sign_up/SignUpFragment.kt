@@ -27,6 +27,10 @@ class SignUpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.tvToSignIn.setOnClickListener {
+            findNavController().navigate(R.id.action_signUpFragment_to_signInFragment)
+        }
+
         binding.btnSignIn.setOnClickListener {
             val repositoryImpl = RemoteRepositoryImpl()
 
