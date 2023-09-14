@@ -45,7 +45,7 @@ android {
 
 dependencies {
     // Security
-    implementation("androidx.security:security-crypto:1.0.0")
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
 
     // Room
     val room_version = "2.5.2"
