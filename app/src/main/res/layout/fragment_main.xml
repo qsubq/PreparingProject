@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.screen.main.MainFragment">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/materialTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="131dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="132dp"
+        android:text="@string/select_your_language"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="170dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="171dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialTextView">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgChina"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:background="@drawable/china_flag" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="70dp"
+            android:id="@+id/imgUsa"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/usa_flag" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="70dp"
+            android:id="@+id/imgRus"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/rus_flag" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
