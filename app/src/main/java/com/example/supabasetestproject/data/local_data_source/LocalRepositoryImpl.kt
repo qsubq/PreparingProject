@@ -19,11 +19,22 @@ open class LocalRepositoryImpl(context: Context) : LocalRepository {
         EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM,
     )
 
+    private val preference = context.getSharedPreferences("LanguagePref", Context.MODE_PRIVATE)
+
     override fun setIsAlreadySeenOnBoarding() {
         sharedPreferences.edit().putBoolean("isAlreadySeenOnBoarding", true).apply()
     }
 
     override fun isAlreadySeenOnBoarding(): Boolean {
         return sharedPreferences.getBoolean("isAlreadySeenOnBoarding", false)
+    }
+
+    fun setLanguage(language: String) {
+        preference.edit().putString("PreferenceLoginCount", language).apply()
+    }
+
+    fun getLanguage(): String {
+        val language = preference.getString("PreferenceLoginCount", "en")
+        return language!!
     }
 }

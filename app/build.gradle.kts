@@ -71,6 +71,8 @@ dependencies {
     implementation(platform("io.github.jan-tennert.supabase:bom:1.3.0"))
     implementation("io.github.jan-tennert.supabase:postgrest-kt")
     implementation("io.github.jan-tennert.supabase:realtime-kt")
+    implementation("io.github.jan-tennert.supabase:storage-kt")
+    implementation("io.github.jan-tennert.supabase:functions-kt")
 
     // Ktor
     implementation("io.ktor:ktor-client-okhttp:2.0.0")
@@ -93,9 +95,14 @@ dependencies {
 
     // ML Kit
     implementation("com.google.mlkit:translate:17.0.1")
-    implementation("com.google.android.gms:play-services-mlkit-text-recognition:19.0.0")
     implementation("com.google.mlkit:language-id:17.0.4")
     implementation("com.google.mlkit:text-recognition:16.0.0")
+    implementation("com.google.mlkit:digital-ink-recognition:18.1.0")
+    implementation("com.google.mlkit:text-recognition:16.0.0")
+    implementation("com.google.mlkit:text-recognition-chinese:16.0.0")
+    implementation("com.google.mlkit:text-recognition-devanagari:16.0.0")
+    implementation("com.google.mlkit:text-recognition-japanese:16.0.0")
+    implementation("com.google.mlkit:text-recognition-korean:16.0.0")
     implementation("com.google.android.gms:play-services-mlkit-text-recognition:19.0.0")
     implementation("com.google.android.gms:play-services-mlkit-text-recognition-chinese:16.0.0")
     implementation("com.google.android.gms:play-services-mlkit-text-recognition-devanagari:16.0.0")

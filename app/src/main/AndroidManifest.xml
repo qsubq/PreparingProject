@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".app.MainApplication"
         android:allowBackup="true"
@@ -14,6 +16,9 @@
         android:theme="@style/Theme.SupabaseTestProject"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.screen.settings.SettingsActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.MainActivity"
             android:exported="true">
             <intent-filter>
@@ -22,6 +27,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.google.mlkit.vision.DEPENDENCIES"
+            android:value="ocr, ocr_chinese,ocr_devanagari,ocr_japanese,ocr_korean"></meta-data>
     </application>
 
 </manifest>

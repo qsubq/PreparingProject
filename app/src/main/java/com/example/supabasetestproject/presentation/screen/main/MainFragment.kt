@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
+import com.example.supabasetestproject.data.local_data_source.LocalRepositoryImpl
 import com.example.supabasetestproject.databinding.FragmentMainBinding
 
 class MainFragment : Fragment() {
@@ -29,9 +30,19 @@ class MainFragment : Fragment() {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
         }
-    }
 
-    companion object {
-        val language: String = ""
+        val repositoryImpl = LocalRepositoryImpl(requireContext())
+        binding.imgChina.setOnClickListener {
+            repositoryImpl.setLanguage("sg")
+            requireActivity().recreate()
+        }
+        binding.imgRus.setOnClickListener {
+            repositoryImpl.setLanguage("ru")
+            requireActivity().recreate()
+        }
+        binding.imgUsa.setOnClickListener {
+            repositoryImpl.setLanguage("en")
+            requireActivity().recreate()
+        }
     }
 }

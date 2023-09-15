@@ -12,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.example.supabasetestproject.databinding.FragmentPhotoRecognitionBinding
+import com.google.mlkit.nl.translate.TranslatorOptions
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
@@ -47,7 +48,10 @@ class PhotoRecognitionFragment : Fragment() {
                 val textAnalyzer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
                 if (image != null) {
                     textAnalyzer.process(image)
-                        .addOnSuccessListener { }
+                        .addOnSuccessListener {
+                            val translateOptions = TranslatorOptions.Builder()
+
+                        }
                         .addOnFailureListener { }
                 }
             }

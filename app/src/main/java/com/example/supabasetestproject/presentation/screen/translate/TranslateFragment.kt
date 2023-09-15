@@ -1,6 +1,7 @@
 package com.example.supabasetestproject.presentation.screen.translate
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,18 +24,24 @@ class TranslateFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         val options = TranslatorOptions.Builder()
             .setSourceLanguage(TranslateLanguage.RUSSIAN)
-            .setTargetLanguage(TranslateLanguage.ENGLISH)
+            .setTargetLanguage(TranslateLanguage.CHINESE)
             .build()
 
         val translator = Translation.getClient(options)
         translator.downloadModelIfNeeded()
-            .addOnSuccessListener {  }
-            .addOnFailureListener {  }
+            .addOnSuccessListener { binding.btnTranslate.visibility = View.VISIBLE }
+            .addOnFailureListener { }
 
-        translator.translate("Просто так")
-            .addOnSuccessListener {  }
-            .addOnFailureListener {  }
+        binding.btnTranslate.setOnClickListener {
+            translator.translate("Просто текст на русском")
+                .addOnSuccessListener {
+                    Log.e("Translate", "Translated text: $it")
+                    binding.tvText2.text = it
+                }
+                .addOnFailureListener { }
+        }
     }
 }
