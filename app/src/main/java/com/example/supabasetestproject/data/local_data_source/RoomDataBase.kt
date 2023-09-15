@@ -6,19 +6,19 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(entities = [UsersEntities::class], version = 1)
-abstract class RoomDataBase : RoomDatabase() {
-    abstract fun getDao(): com.example.supabasetestproject.data.local_data_source.Dao
+abstract class RoomDataBas : RoomDatabase() {
+    abstract fun getDao(): Dao
 
     companion object {
-        var dataBase: RoomDataBase? = null
+        var dataBase: RoomDataBas? = null
 
         @Synchronized
-        fun getInstance(context: Context): RoomDataBase {
-            if (dataBase == null) {
-                dataBase = Room.databaseBuilder(context, RoomDataBase::class.java, "db").build()
-                return dataBase as RoomDataBase
+        fun getInstance(context: Context): RoomDataBas {
+            return if (dataBase == null) {
+                dataBase = Room.databaseBuilder(context, RoomDataBas::class.java, "db").build()
+                dataBase as RoomDataBas
             } else {
-                return dataBase as RoomDataBase
+                dataBase as RoomDataBas
             }
         }
     }

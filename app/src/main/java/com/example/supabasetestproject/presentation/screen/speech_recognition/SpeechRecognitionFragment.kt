@@ -25,7 +25,8 @@ class SpeechRecognitionFragment : Fragment() {
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                 if (it.resultCode == Activity.RESULT_OK) {
                     val res = it.data?.getStringArrayExtra(RecognizerIntent.EXTRA_RESULTS)
-                    val text = res?.joinToString()
+
+                    res?.joinToString()
                 }
             }
         binding = FragmentSpeechRecognitionBinding.inflate(layoutInflater, container, false)
@@ -36,11 +37,11 @@ class SpeechRecognitionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
         intent.putExtra(
             RecognizerIntent.EXTRA_LANGUAGE_MODEL,
             RecognizerIntent.LANGUAGE_MODEL_FREE_FORM,
         )
-        speechRecognitionLauncher.launch(intent)
     }
 }

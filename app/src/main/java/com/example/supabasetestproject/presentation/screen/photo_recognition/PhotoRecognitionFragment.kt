@@ -43,15 +43,12 @@ class PhotoRecognitionFragment : Fragment() {
                 val image = bitmap?.let { it1 ->
                     InputImage.fromBitmap(it1, 0)
                 }
-                val textAnalyzer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
 
+                val textAnalyzer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
                 if (image != null) {
                     textAnalyzer.process(image)
-                        .addOnSuccessListener {
-                            binding.tvRecognizedText.text = it.text
-                        }
-                        .addOnFailureListener {
-                        }
+                        .addOnSuccessListener { }
+                        .addOnFailureListener { }
                 }
             }
         binding = FragmentPhotoRecognitionBinding.inflate(layoutInflater, container, false)

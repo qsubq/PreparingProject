@@ -44,6 +44,20 @@ android {
 }
 
 dependencies {
+    // Retrofit
+    val retrofitVersion = "2.9.0"
+    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
+    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
+
+    // Gson
+    implementation("com.google.code.gson:gson:2.10.1")
+
+    // SwipeRefreshLayout
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+
+    // Glide
+    implementation("com.github.bumptech.glide:glide:4.12.0")
+
     // Security
     implementation("androidx.security:security-crypto:1.1.0-alpha06")
 

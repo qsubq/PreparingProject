@@ -31,6 +31,9 @@
         <action
             android:id="@+id/action_signInFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment" />
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
@@ -46,4 +49,31 @@
         android:name="com.example.supabasetestproject.presentation.screen.photo_recognition.PhotoRecognitionFragment"
         android:label="fragment_photo_recognition"
         tools:layout="@layout/fragment_photo_recognition" />
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.example.supabasetestproject.presentation.screen.forgot_password.ForgotPasswordFragment"
+        android:label="fragment_forgot_password"
+        tools:layout="@layout/fragment_forgot_password" >
+        <action
+            android:id="@+id/action_forgotPasswordFragment_to_emailCodeFragment"
+            app:destination="@id/emailCodeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="com.example.supabasetestproject.presentation.screen.change_password.ChangePasswordFragment"
+        android:label="fragment_change_password"
+        tools:layout="@layout/fragment_change_password" >
+        <action
+            android:id="@+id/action_changePasswordFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/emailCodeFragment"
+        android:name="com.example.supabasetestproject.presentation.screen.email_code.EmailCodeFragment"
+        android:label="fragment_email_code"
+        tools:layout="@layout/fragment_email_code" >
+        <action
+            android:id="@+id/action_emailCodeFragment_to_changePasswordFragment"
+            app:destination="@id/changePasswordFragment" />
+    </fragment>
 </navigation>

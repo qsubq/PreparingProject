@@ -2,6 +2,7 @@ package com.example.supabasetestproject.data.remote_data_source
 
 import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.gotrue.GoTrue
+import io.github.jan.supabase.gotrue.OtpType
 import io.github.jan.supabase.gotrue.gotrue
 import io.github.jan.supabase.gotrue.providers.builtin.Email
 import io.github.jan.supabase.postgrest.Postgrest
@@ -24,10 +25,30 @@ class RemoteRepositoryImpl {
         }
     }
 
-    suspend fun signIn(email: String, password: String){
+    suspend fun signIn(email: String, password: String) {
         client.gotrue.loginWith(Email) {
             this.email = email
             this.password = password
         }
+    }
+
+    suspend fun otpSignIn(email: String) {
+        client.gotrue.sendOtpTo(Email) {
+            this.email = email
+        }
+    }
+
+    suspend fun changePassword(password: String) {
+        client.gotrue.modifyUser {
+            this.password = password
+        }
+    }
+
+    suspend fun verifyOTP(email: String, token: String) {
+        client.gotrue.verifyEmailOtp(
+            type = OtpType.Email.MAGIC_LINK,
+            email = email,
+            token = token,
+        )
     }
 }

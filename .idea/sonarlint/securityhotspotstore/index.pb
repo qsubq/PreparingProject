@@ -29,3 +29,17 @@ D
 _app/src/main/java/com/example/supabasetestproject/data/local_data_source/LocalRepositoryImpl.kt,d\b\db9a6ff99518e8588e39218655a309c6c906b7ab
 è
 _app/src/main/java/com/example/supabasetestproject/presentation/screen/sign_in/SignInFragment.kt,1\6\16d63e24f8b4f053cdbdccce615ba647f5200b0d
+è
+_app/src/main/java/com/example/supabasetestproject/presentation/screen/sign_up/SignUpFragment.kt,f\f\fff514d7f8c81e1797010c36e4bed7f01509517c
+Ü
+Vapp/src/main/java/com/example/supabasetestproject/domain/repository/LocalRepository.kt,2\e\2e4e26a8a478ac9533bdf182d306dcf49927cec7
+ü
+oapp/src/main/java/com/example/supabasetestproject/presentation/screen/forgot_password/ForgotPasswordFragment.kt,d\f\df22324be2480932188061c53af3a1474e7edf4f
+ï
+eapp/src/main/java/com/example/supabasetestproject/presentation/screen/email_code/EmailCodeFragment.kt,8\5\8582ecc05570c7d13b8d19d760970c7be268ff66
+ü
+oapp/src/main/java/com/example/supabasetestproject/presentation/screen/change_password/ChangePasswordFragment.kt,0\4\043c9bf08d9d4ec0c87aa4ed523b21af52951468
+•
+uapp/src/main/java/com/example/supabasetestproject/presentation/screen/speech_recognition/SpeechRecognitionFragment.kt,b\e\be065fab5ab228a744c2ba406e7ccc0143fd7aec
+î
+dapp/src/main/java/com/example/supabasetestproject/presentation/screen/translate/TranslateFragment.kt,e\6\e66e07abc9a530b55f4501f6743083716ba0e005

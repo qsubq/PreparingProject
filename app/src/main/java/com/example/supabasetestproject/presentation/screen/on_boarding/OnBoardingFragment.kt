@@ -43,7 +43,7 @@ import java.util.Queue
 class OnBoardingFragment : Fragment() {
 
     companion object {
-        val onBoardingQueue =
+        var onBoardingQueue =
             LinkedList(
                 mutableListOf(
                     OnBoardingModel(

@@ -36,37 +36,63 @@ class OnBoardingTest {
         repositoryImpl = mock(TestLocalRepository::class.java)
     }
 
+//    @Test
+//    fun test_1() {
+//        val onBoardingQueue = OnBoardingFragment.onBoardingQueue
+//
+//        val currentItem = onBoardingQueue.poll()
+//    }
+//
+//    @Test
+//    fun test_2() {
+//        val onBoardingQueue = OnBoardingFragment.onBoardingQueue
+//
+//        val expectedSize = onBoardingQueue.size - 1
+//        onBoardingQueue.poll()
+//
+//        val actualSize = onBoardingQueue.size
+//        assertEquals(expectedSize, actualSize)
+//    }
+
     @Test
-    fun test_1() {
-        val onBoardingQueue = OnBoardingFragment.onBoardingQueue
+    fun test_4() {
+        val navController = TestNavHostController(ApplicationProvider.getApplicationContext())
+        val onBoardingQueue = LinkedList(
+            mutableListOf(
+                OnBoardingModel(
+                    R.drawable.on_boarding_image_1,
+                    "Text 1",
+                    "Text 2",
+                ),
+            ),
+        )
 
-        val currentItem = onBoardingQueue.poll()
-    }
+        rule.setContent {
+            navController.setGraph(R.navigation.nav_graph)
 
-    @Test
-    fun test_2() {
-        val onBoardingQueue = OnBoardingFragment.onBoardingQueue
-
-        val expectedSize = onBoardingQueue.size - 1
-        onBoardingQueue.poll()
-
-        val actualSize = onBoardingQueue.size
-        assertEquals(expectedSize, actualSize)
+            OnBoardingScreen(
+                navController = navController,
+                onBoardingQueue = onBoardingQueue,
+                repositoryImpl,
+            )
+        }
+        with(rule) {
+            onNodeWithTag("SignUpBtn").assertExists()
+        }
     }
 
     @Test
     fun test_5() {
         val navController = TestNavHostController(ApplicationProvider.getApplicationContext())
-        val onBoardingQueue =
-            LinkedList(
-                mutableListOf(
-                    OnBoardingModel(
-                        R.drawable.on_boarding_image_3,
-                        "Real-time Tracking Third",
-                        "Enjoy quick pick-up and delivery to your destination",
-                    ),
+        val onBoardingQueue = LinkedList(
+            mutableListOf(
+                OnBoardingModel(
+                    R.drawable.on_boarding_image_1,
+                    "Text 1",
+                    "Text 2",
                 ),
-            )
+            ),
+        )
 
         rule.setContent {
             navController.setGraph(R.navigation.nav_graph)

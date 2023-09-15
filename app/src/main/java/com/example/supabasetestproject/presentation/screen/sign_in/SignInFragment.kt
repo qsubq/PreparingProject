@@ -1,12 +1,19 @@
 package com.example.supabasetestproject.presentation.screen.sign_in
 
 import android.os.Bundle
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.example.supabasetestproject.R
 import com.example.supabasetestproject.data.remote_data_source.RemoteRepositoryImpl
 import com.example.supabasetestproject.databinding.FragmentSignInBinding
 import kotlinx.coroutines.launch
@@ -30,6 +37,28 @@ class SignInFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val spannableTextForgotPassword =
+            SpannableStringBuilder("Забыли пароль ?")
+        val spanForgotPassword = object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                findNavController().navigate(R.id.action_signInFragment_to_forgotPasswordFragment)
+            }
+        }
+
+        spannableTextForgotPassword.setSpan(
+            spanForgotPassword,
+            0,
+            "Забыли пароль ?".length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
+        )
+        binding.tvForgotPassword.setText(spannableTextForgotPassword, TextView.BufferType.SPANNABLE)
+        binding.tvForgotPassword.movementMethod = LinkMovementMethod.getInstance()
+
+        binding.tvForgotPassword.setOnClickListener {
+            findNavController().navigate(R.id.action_signInFragment_to_forgotPasswordFragment)
+        }
+
+
         binding.btnSignIn.setOnClickListener {
             val repositoryImpl = RemoteRepositoryImpl()
             lifecycleScope.launch {
@@ -37,6 +66,7 @@ class SignInFragment : Fragment() {
                     binding.TIETEmail.text.toString(),
                     binding.TIETPassword.text.toString(),
                 )
+                findNavController().navigate(R.id.action_signInFragment_to_mainFragment)
             }
 
             val message = binding.TIETPassword.text.toString()
