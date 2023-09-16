@@ -14,16 +14,8 @@ class MyContextWrapper(base: Context) : ContextWrapper(base) {
             config.setLocale(locale)
 
             val context = ctx.createConfigurationContext(config)
+
             return MyContextWrapper(context)
         }
     }
 }
-
-// val locale = Locale(language)
-// Locale.setDefault(locale)
-//
-// val config = ctx.resources.configuration
-// config.setLocale(locale)
-//
-// val context = ctx.createConfigurationContext(config)
-// return MyContextWrapper(context)

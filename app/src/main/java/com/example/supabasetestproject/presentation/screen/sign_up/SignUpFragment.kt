@@ -38,6 +38,8 @@ class SignUpFragment : Fragment() {
                 repositoryImpl.signUp(
                     binding.TIETEmail.text.toString(),
                     binding.TIETPassword.text.toString(),
+                    "Name for man or woman",
+                    50
                 )
             }
             val bundle = Bundle()

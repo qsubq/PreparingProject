@@ -15,8 +15,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun attachBaseContext(newBase: Context?) {
         val repository = LocalRepositoryImpl(newBase!!)
-        super.attachBaseContext(
-            MyContextWrapper.wrap(newBase, repository.getLanguage()),
-        )
+        super.attachBaseContext(MyContextWrapper.wrap(newBase, repository.getLanguage()))
     }
 }

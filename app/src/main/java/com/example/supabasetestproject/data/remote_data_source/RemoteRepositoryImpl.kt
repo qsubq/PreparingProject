@@ -7,9 +7,11 @@ import io.github.jan.supabase.gotrue.gotrue
 import io.github.jan.supabase.gotrue.providers.builtin.Email
 import io.github.jan.supabase.postgrest.Postgrest
 import io.github.jan.supabase.realtime.Realtime
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.put
 
 class RemoteRepositoryImpl {
-    val client = createSupabaseClient(
+    private val client = createSupabaseClient(
         supabaseUrl = "https://egtovzmzcxnecopqvrtf.supabase.co",
         supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVndG92em16Y3huZWNvcHF2cnRmIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTQ1MTcxOTksImV4cCI6MjAxMDA5MzE5OX0.LFBbY6qWMZadKH9F5_lRKcoHaVMl7E7hi8Kep3MctPE",
     ) {
@@ -18,10 +20,14 @@ class RemoteRepositoryImpl {
         install(Realtime)
     }
 
-    suspend fun signUp(email: String, password: String) {
+    suspend fun signUp(email: String, password: String, name: String, age: Int) {
         client.gotrue.signUpWith(Email) {
             this.email = email
             this.password = password
+            this.data = buildJsonObject {
+                put("name", name)
+                put("age", age)
+            }
         }
     }
 
