@@ -39,7 +39,8 @@ class SignUpFragment : Fragment() {
                     binding.TIETEmail.text.toString(),
                     binding.TIETPassword.text.toString(),
                     "Name for man or woman",
-                    50
+                    50,
+                    binding.TIETNumber.text.toString(),
                 )
             }
             val bundle = Bundle()

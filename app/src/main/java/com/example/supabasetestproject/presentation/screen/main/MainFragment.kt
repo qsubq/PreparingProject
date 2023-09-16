@@ -16,6 +16,8 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDeepLinkBuilder
 import androidx.work.ForegroundInfo
 import androidx.work.OneTimeWorkRequestBuilder
@@ -24,11 +26,18 @@ import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.example.supabasetestproject.R
 import com.example.supabasetestproject.data.local_data_source.LocalRepositoryImpl
+import com.example.supabasetestproject.data.model.UserModelResponse
+import com.example.supabasetestproject.data.remote_data_source.RemoteRepositoryImpl
 import com.example.supabasetestproject.databinding.FragmentMainBinding
+import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 
 class MainFragment : Fragment() {
     private lateinit var binding: FragmentMainBinding
+    private val email by lazy {
+        arguments?.getString("email")
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,6 +50,8 @@ class MainFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val userNameLiveData: MutableLiveData<List<UserModelResponse>> = MutableLiveData()
 
         with(binding) {
             checkBox.setOnCheckedChangeListener { _, isChecked ->
@@ -77,6 +88,14 @@ class MainFragment : Fragment() {
                     .build()
                 WorkManager.getInstance(requireContext()).enqueue(worker)
             }
+        }
+        userNameLiveData.observe(viewLifecycleOwner) {
+            binding.tvUserName.text = it.first().name
+        }
+
+        lifecycleScope.launch {
+            val remoteRepository = RemoteRepositoryImpl()
+            userNameLiveData.value = email?.let { remoteRepository.getUserInfoForEmail(it) }
         }
     }
 

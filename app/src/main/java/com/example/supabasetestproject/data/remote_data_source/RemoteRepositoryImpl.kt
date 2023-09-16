@@ -1,26 +1,30 @@
 package com.example.supabasetestproject.data.remote_data_source
 
+import com.example.supabasetestproject.data.model.UserModel
+import com.example.supabasetestproject.data.model.UserModelResponse
 import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.gotrue.GoTrue
 import io.github.jan.supabase.gotrue.OtpType
 import io.github.jan.supabase.gotrue.gotrue
 import io.github.jan.supabase.gotrue.providers.builtin.Email
 import io.github.jan.supabase.postgrest.Postgrest
+import io.github.jan.supabase.postgrest.postgrest
+import io.github.jan.supabase.postgrest.query.Returning
 import io.github.jan.supabase.realtime.Realtime
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 
 class RemoteRepositoryImpl {
     private val client = createSupabaseClient(
-        supabaseUrl = "https://egtovzmzcxnecopqvrtf.supabase.co",
-        supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVndG92em16Y3huZWNvcHF2cnRmIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTQ1MTcxOTksImV4cCI6MjAxMDA5MzE5OX0.LFBbY6qWMZadKH9F5_lRKcoHaVMl7E7hi8Kep3MctPE",
+        supabaseUrl = "https://kepofsjhmtkutvieibrs.supabase.co",
+        supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtlcG9mc2pobXRrdXR2aWVpYnJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODg0NjQwMzQsImV4cCI6MjAwNDA0MDAzNH0.3Q1--FQgCgDb3naCRbNO1ZbkueAAP571VGJR36M5AkQ",
     ) {
         install(GoTrue)
         install(Postgrest)
         install(Realtime)
     }
 
-    suspend fun signUp(email: String, password: String, name: String, age: Int) {
+    suspend fun signUp(email: String, password: String, name: String, age: Int, phone: String) {
         client.gotrue.signUpWith(Email) {
             this.email = email
             this.password = password
@@ -29,6 +33,20 @@ class RemoteRepositoryImpl {
                 put("age", age)
             }
         }
+        val user = UserModel(
+            avatar = "",
+            balance = "",
+            name = "NameOfJohn",
+            rider = false,
+            email = email,
+            phone = phone,
+            transactions = null,
+            unread_count = 0,
+        )
+        client.postgrest["users"].insert(
+            user,
+            returning = Returning.MINIMAL,
+        )
     }
 
     suspend fun signIn(email: String, password: String) {
@@ -56,5 +74,11 @@ class RemoteRepositoryImpl {
             email = email,
             token = token,
         )
+    }
+
+    suspend fun getUserInfoForEmail(email: String): List<UserModelResponse> {
+        return client.postgrest["users"].select {
+            UserModelResponse::email eq email
+        }.decodeAs()
     }
 }

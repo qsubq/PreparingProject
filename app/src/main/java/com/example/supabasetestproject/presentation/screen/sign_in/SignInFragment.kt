@@ -58,7 +58,6 @@ class SignInFragment : Fragment() {
             findNavController().navigate(R.id.action_signInFragment_to_forgotPasswordFragment)
         }
 
-
         binding.btnSignIn.setOnClickListener {
             val repositoryImpl = RemoteRepositoryImpl()
             lifecycleScope.launch {
@@ -66,7 +65,9 @@ class SignInFragment : Fragment() {
                     binding.TIETEmail.text.toString(),
                     binding.TIETPassword.text.toString(),
                 )
-                findNavController().navigate(R.id.action_signInFragment_to_mainFragment)
+                val bundle = Bundle()
+                bundle.putString("email", binding.TIETEmail.text.toString())
+                findNavController().navigate(R.id.action_signInFragment_to_mainFragment, bundle)
             }
 
             val message = binding.TIETPassword.text.toString()
