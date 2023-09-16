@@ -43,3 +43,7 @@ oapp/src/main/java/com/example/supabasetestproject/presentation/screen/change_pa
 uapp/src/main/java/com/example/supabasetestproject/presentation/screen/speech_recognition/SpeechRecognitionFragment.kt,b\e\be065fab5ab228a744c2ba406e7ccc0143fd7aec
 ”
 dapp/src/main/java/com/example/supabasetestproject/presentation/screen/translate/TranslateFragment.kt,e\6\e66e07abc9a530b55f4501f6743083716ba0e005
+–
+fapp/src/main/java/com/example/supabasetestproject/presentation/screen/translate/TranslationSettings.kt,7\a\7a392096d10a42695814e0d993b12f6febf7771c
+’
+bapp/src/main/java/com/example/supabasetestproject/presentation/screen/settings/SettingsActivity.kt,9\e\9e26f2ce3891fb6edc4af732fba1279612386701
