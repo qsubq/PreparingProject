@@ -44,6 +44,16 @@ android {
 }
 
 dependencies {
+    // CameraX dependencies
+    val camerax_version = "1.0.0-beta05"
+    implementation("androidx.camera:camera-core:$camerax_version")
+    implementation("androidx.camera:camera-camera2:$camerax_version")
+    implementation("androidx.camera:camera-lifecycle:$camerax_version")
+    implementation("androidx.camera:camera-view:1.0.0-alpha12")
+
+    // Workmanager
+    implementation("androidx.work:work-runtime-ktx:2.8.1")
+
     // Retrofit
     val retrofitVersion = "2.9.0"
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
@@ -110,9 +120,11 @@ dependencies {
     implementation("com.google.android.gms:play-services-mlkit-text-recognition-korean:16.0.0")
 
     // Navigation
-    implementation("androidx.navigation:navigation-common-ktx:2.6.0")
-    implementation("androidx.navigation:navigation-fragment-ktx:2.6.0")
-    implementation("androidx.navigation:navigation-testing:2.6.0")
+    val nav_version = "2.6.0"
+    implementation("androidx.navigation:navigation-common-ktx:$nav_version")
+    implementation("androidx.navigation:navigation-runtime-ktx:$nav_version")
+    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
+    implementation("androidx.navigation:navigation-testing:$nav_version")
 
     // Test
     androidTestImplementation("org.mockito:mockito-core:2.19.0")

@@ -1,13 +1,31 @@
 package com.example.supabasetestproject.presentation.screen.main
 
+import android.Manifest
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavDeepLinkBuilder
+import androidx.work.ForegroundInfo
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.Worker
+import androidx.work.WorkerParameters
+import com.example.supabasetestproject.R
 import com.example.supabasetestproject.data.local_data_source.LocalRepositoryImpl
 import com.example.supabasetestproject.databinding.FragmentMainBinding
+import java.util.concurrent.TimeUnit
 
 class MainFragment : Fragment() {
     private lateinit var binding: FragmentMainBinding
@@ -20,29 +38,101 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.checkBox.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        with(binding) {
+            checkBox.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                }
+            }
+
+            val repositoryImpl = LocalRepositoryImpl(requireContext())
+            imgChina.setOnClickListener {
+                repositoryImpl.setLanguage("sg")
+                requireActivity().recreate()
+            }
+            imgRus.setOnClickListener {
+                repositoryImpl.setLanguage("ru")
+                requireActivity().recreate()
+            }
+            imgUsa.setOnClickListener {
+                repositoryImpl.setLanguage("en")
+                requireActivity().recreate()
+            }
+            tvSendNotification.setOnClickListener {
+                ActivityCompat.requestPermissions(
+                    requireActivity(),
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    10,
+                )
+                createNotificationChannel()
+
+                val worker = OneTimeWorkRequestBuilder<NotificationWorker>()
+                    .setInitialDelay(1, TimeUnit.MINUTES)
+                    .build()
+                WorkManager.getInstance(requireContext()).enqueue(worker)
+            }
+        }
+    }
+
+    class NotificationWorker(
+        private val context: Context,
+        workerParameters: WorkerParameters,
+    ) : Worker(context, workerParameters) {
+        private val notification = createNotification()
+
+        override fun doWork(): Result {
+            return try {
+                if (ActivityCompat.checkSelfPermission(
+                        context,
+                        Manifest.permission.POST_NOTIFICATIONS,
+                    ) == PackageManager.PERMISSION_GRANTED
+                ) {
+                    NotificationManagerCompat.from(context).notify(101, notification)
+                    Result.success()
+                } else {
+                    Result.failure()
+                }
+            } catch (e: Exception) {
+                Result.failure()
             }
         }
 
-        val repositoryImpl = LocalRepositoryImpl(requireContext())
-        binding.imgChina.setOnClickListener {
-            repositoryImpl.setLanguage("sg")
-            requireActivity().recreate()
+        override fun getForegroundInfo(): ForegroundInfo {
+            return ForegroundInfo(101, notification)
         }
-        binding.imgRus.setOnClickListener {
-            repositoryImpl.setLanguage("ru")
-            requireActivity().recreate()
+
+        private fun createNotification(): Notification {
+            val intent = NavDeepLinkBuilder(context)
+                .setGraph(R.navigation.nav_graph)
+                .setDestination(R.id.mainFragment)
+                .createPendingIntent()
+
+            val notification = Notification.Builder(context, "99")
+                .setContentText("Notification after 3 minutes idle")
+                .setContentTitle("Reminder notification")
+                .setContentIntent(intent)
+                .setAutoCancel(true)
+                .setSmallIcon(R.drawable.rus_flag)
+                .build()
+            return notification
         }
-        binding.imgUsa.setOnClickListener {
-            repositoryImpl.setLanguage("en")
-            requireActivity().recreate()
-        }
+    }
+
+    private fun createNotificationChannel() {
+        val notificationManager =
+            requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(
+            NotificationChannel(
+                "99",
+                "ChannelName",
+                NotificationManager.IMPORTANCE_DEFAULT,
+            ),
+        )
     }
 }
