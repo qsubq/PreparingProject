@@ -12,12 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="250dp"
+        android:layout_marginTop="192dp"
         android:layout_marginEnd="20dp"
         android:hint="code"
         app:helperTextTextColor="@android:color/holo_red_dark"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -34,11 +34,36 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="77dp"
         android:layout_marginEnd="20dp"
         android:text="Set new password"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvResendCodeTimer" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvResendCodeTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="8dp"
+        android:text="If you didn’t receive code, "
+        android:textColor="#A7A7A7"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TILPassword" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:visibility="gone"
+        android:id="@+id/tvResendCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Resend"
+        android:textColor="#0560FA"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/tvResendCodeTimer"
         app:layout_constraintTop_toBottomOf="@+id/TILPassword" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

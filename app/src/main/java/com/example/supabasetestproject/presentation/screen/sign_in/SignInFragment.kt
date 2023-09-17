@@ -1,8 +1,8 @@
 package com.example.supabasetestproject.presentation.screen.sign_in
 
 import android.os.Bundle
+import android.text.Spannable
 import android.text.SpannableStringBuilder
-import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.util.Log
@@ -37,26 +37,20 @@ class SignInFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val spannableTextForgotPassword =
-            SpannableStringBuilder("Забыли пароль ?")
-        val spanForgotPassword = object : ClickableSpan() {
-            override fun onClick(widget: View) {
+        val spannableTextForgotPassword = SpannableStringBuilder("Забыли пароль ?")
+        val clickableSpanForgotPassword = object : ClickableSpan() {
+            override fun onClick(p0: View) {
                 findNavController().navigate(R.id.action_signInFragment_to_forgotPasswordFragment)
             }
         }
-
         spannableTextForgotPassword.setSpan(
-            spanForgotPassword,
+            clickableSpanForgotPassword,
             0,
             "Забыли пароль ?".length,
-            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE,
         )
         binding.tvForgotPassword.setText(spannableTextForgotPassword, TextView.BufferType.SPANNABLE)
         binding.tvForgotPassword.movementMethod = LinkMovementMethod.getInstance()
-
-        binding.tvForgotPassword.setOnClickListener {
-            findNavController().navigate(R.id.action_signInFragment_to_forgotPasswordFragment)
-        }
 
         binding.btnSignIn.setOnClickListener {
             val repositoryImpl = RemoteRepositoryImpl()

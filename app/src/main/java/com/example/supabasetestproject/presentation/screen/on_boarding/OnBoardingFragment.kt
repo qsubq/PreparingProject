@@ -70,6 +70,11 @@ class OnBoardingFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
+        val repositoryImpl = LocalRepositoryImpl(requireContext())
+        if (repositoryImpl.isAlreadySeenOnBoarding()) {
+            findNavController().navigate(R.id.action_onBoardingFragment_to_signUpFragment)
+        }
+
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {

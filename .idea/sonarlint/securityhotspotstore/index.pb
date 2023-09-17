@@ -47,3 +47,9 @@ dapp/src/main/java/com/example/supabasetestproject/presentation/screen/translate
 fapp/src/main/java/com/example/supabasetestproject/presentation/screen/translate/TranslationSettings.kt,7\a\7a392096d10a42695814e0d993b12f6febf7771c
 í
 bapp/src/main/java/com/example/supabasetestproject/presentation/screen/settings/SettingsActivity.kt,9\e\9e26f2ce3891fb6edc4af732fba1279612386701
+@
+build.gradle.kts,d\b\dbcff70658daf80b53ce624f6adcaa529df5ed8d
+y
+Iapp/src/main/java/com/example/supabasetestproject/data/model/UserModel.kt,0\a\0a08528b4a8c101a99de59f2289e67db820c110e
+Å
+Qapp/src/main/java/com/example/supabasetestproject/data/model/UserModelResponse.kt,5\3\53112cca9d779153fb1e728a10db8772e05bd651

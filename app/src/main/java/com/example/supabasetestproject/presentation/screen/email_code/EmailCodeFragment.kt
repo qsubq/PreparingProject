@@ -1,6 +1,7 @@
 package com.example.supabasetestproject.presentation.screen.email_code
 
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,5 +43,17 @@ class EmailCodeFragment : Fragment() {
                 findNavController().navigate(R.id.action_emailCodeFragment_to_changePasswordFragment)
             }
         }
+
+        val countDownTime = object : CountDownTimer(40000, 1000) {
+            override fun onTick(p0: Long) {
+                binding.tvResendCodeTimer.text =
+                    requireContext().getString(R.string.timer, (p0 / 1000).toString())
+            }
+
+            override fun onFinish() {
+                binding.tvResendCode.visibility = View.VISIBLE
+                binding.tvResendCodeTimer.text = "If you didn’t receive code,"
+            }
+        }.start()
     }
 }

@@ -1,6 +1,7 @@
 package com.example.supabasetestproject.presentation.screen.sign_up
 
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,5 +51,7 @@ class SignUpFragment : Fragment() {
                 bundle,
             )
         }
+
+
     }
 }
