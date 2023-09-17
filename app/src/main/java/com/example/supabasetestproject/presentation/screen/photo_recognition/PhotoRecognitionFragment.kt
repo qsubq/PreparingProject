@@ -61,9 +61,11 @@ class PhotoRecognitionFragment : Fragment() {
                                     if (languageCode == "en") {
                                         val repositoryImpl = LocalRepositoryImpl(requireContext())
 
+                                        Log.e("Language", TranslateLanguage.RUSSIAN)
+
                                         val translatorOptions = TranslatorOptions.Builder()
                                             .setSourceLanguage(TranslateLanguage.ENGLISH)
-                                            .setTargetLanguage(TranslateLanguage.RUSSIAN)
+                                            .setTargetLanguage(repositoryImpl.getLanguage())
                                             .build()
 
                                         val translatorClient =
