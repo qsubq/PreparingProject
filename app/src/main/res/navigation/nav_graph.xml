@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/photoRecognitionFragment">
+    app:startDestination="@id/objectRecognitionFragment">
 
     <fragment
         android:id="@+id/onBoardingFragment"
@@ -98,4 +98,9 @@
         android:name="com.example.supabasetestproject.presentation.screen.speech_recognition.SpeechRecognitionFragment"
         android:label="fragment_speech_recognition"
         tools:layout="@layout/fragment_speech_recognition" />
+    <fragment
+        android:id="@+id/objectRecognitionFragment"
+        android:name="com.example.supabasetestproject.presentation.screen.object_recognition.ObjectRecognitionFragment"
+        android:label="fragment_object_recognition"
+        tools:layout="@layout/fragment_object_recognition" />
 </navigation>

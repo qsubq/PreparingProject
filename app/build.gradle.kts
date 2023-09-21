@@ -45,6 +45,10 @@ android {
 }
 
 dependencies {
+    implementation("com.google.mlkit:object-detection:17.0.0")
+    implementation("com.google.mlkit:image-labeling:17.0.7")
+    implementation("com.google.android.gms:play-services-mlkit-image-labeling:16.0.8")
+
     // CameraX dependencies
     val camerax_version = "1.0.0-beta05"
     implementation("androidx.camera:camera-core:$camerax_version")

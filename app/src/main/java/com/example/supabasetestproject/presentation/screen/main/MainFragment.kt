@@ -6,15 +6,19 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.ImageDecoder
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.graphics.decodeBitmap
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
@@ -37,12 +41,31 @@ class MainFragment : Fragment() {
     private val email by lazy {
         arguments?.getString("email")
     }
+    private lateinit var imagePicker: ActivityResultLauncher<String>
 
+    @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
+        imagePicker = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            binding.imgToServer.setImageURI(uri)
+
+            lifecycleScope.launch {
+                val repository = RemoteRepositoryImpl()
+                val source =
+                    uri?.let { ImageDecoder.createSource(requireActivity().contentResolver, it) }
+
+                val bitmap = source?.let {
+                    ImageDecoder.decodeBitmap(it)
+                }
+
+                if (uri != null) {
+                    repository.uploadImage(uri)
+                }
+            }
+        }
         binding = FragmentMainBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
@@ -50,8 +73,10 @@ class MainFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val userNameLiveData: MutableLiveData<List<UserModelResponse>> = MutableLiveData()
+        binding.imgToServer.setOnClickListener {
+            imagePicker.launch("photo/*")
+        }
 
         with(binding) {
             checkBox.setOnCheckedChangeListener { _, isChecked ->
@@ -89,13 +114,21 @@ class MainFragment : Fragment() {
                 WorkManager.getInstance(requireContext()).enqueue(worker)
             }
         }
-        userNameLiveData.observe(viewLifecycleOwner) {
-            binding.tvUserName.text = it.first().name
+        if (userNameLiveData.value?.isNotEmpty() == true) {
+            userNameLiveData.observe(viewLifecycleOwner) {
+                binding.tvUserName.text = it.first().name
+            }
         }
 
         lifecycleScope.launch {
             val remoteRepository = RemoteRepositoryImpl()
             userNameLiveData.value = email?.let { remoteRepository.getUserInfoForEmail(it) }
+        }
+        binding.tvSelectLanguage.setOnClickListener {
+            SelectLanguageDialog(LocalRepositoryImpl(requireContext())).show(
+                requireActivity().supportFragmentManager,
+                "Language dialog",
+            )
         }
     }
 

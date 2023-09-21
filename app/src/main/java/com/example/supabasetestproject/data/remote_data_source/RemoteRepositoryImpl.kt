@@ -1,5 +1,6 @@
 package com.example.supabasetestproject.data.remote_data_source
 
+import android.net.Uri
 import com.example.supabasetestproject.data.model.UserModel
 import com.example.supabasetestproject.data.model.UserModelResponse
 import io.github.jan.supabase.createSupabaseClient
@@ -11,8 +12,11 @@ import io.github.jan.supabase.postgrest.Postgrest
 import io.github.jan.supabase.postgrest.postgrest
 import io.github.jan.supabase.postgrest.query.Returning
 import io.github.jan.supabase.realtime.Realtime
+import io.github.jan.supabase.storage.storage
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
+import java.io.File
+import java.net.URI
 
 class RemoteRepositoryImpl {
     private val client = createSupabaseClient(
@@ -80,5 +84,15 @@ class RemoteRepositoryImpl {
         return client.postgrest["users"].select {
             UserModelResponse::email eq email
         }.decodeAs()
+    }
+
+    suspend fun uploadImage(file: Uri) {
+        client.storage.createBucket(id = "avatars") {
+            public = true
+            fileSizeLimit = 10.megabytes
+        }
+        val bucket = client.storage["avatars"]
+        val filledFile = File(URI(file.path))
+        file.path?.let { bucket.upload(it, filledFile.readBytes(), upsert = false) }
     }
 }
