@@ -43,8 +43,6 @@ uapp/src/main/java/com/example/supabasetestproject/presentation/screen/speech_re
 dapp/src/main/java/com/example/supabasetestproject/presentation/screen/translate/TranslateFragment.kt,e\6\e66e07abc9a530b55f4501f6743083716ba0e005
 Ÿ
 oapp/src/main/java/com/example/supabasetestproject/presentation/screen/change_password/ChangePasswordFragment.kt,0\4\043c9bf08d9d4ec0c87aa4ed523b21af52951468
-–
-fapp/src/main/java/com/example/supabasetestproject/presentation/screen/translate/TranslationSettings.kt,7\a\7a392096d10a42695814e0d993b12f6febf7771c
 ’
 bapp/src/main/java/com/example/supabasetestproject/presentation/screen/settings/SettingsActivity.kt,9\e\9e26f2ce3891fb6edc4af732fba1279612386701
 @
